@@ -39,6 +39,6 @@ self.addEventListener('notificationclick', function(event) {
   event.notification.close();
 
   event.waitUntil(
-    clients.openWindow('/tab/dash')
+    clients.openWindow('/index.html#/tab/dash')
   );
 });
