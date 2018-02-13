@@ -39,6 +39,6 @@ self.addEventListener('notificationclick', function(event) {
   event.notification.close();
 
   event.waitUntil(
-    event.RespondWithfetch('/tab/dash');
+    event.RespondWithfetch('/tab/dash')
   );
 });
