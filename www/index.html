@@ -24,63 +24,59 @@
     <script src="js/services.js"></script>
     <!-- <script src="firebase-messaging-sw.js"></script> -->
     <link rel="manifest" href="/manifest.json">
+
+    <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase-messaging.js"></script>
     <!-- <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase-firestore.js"></script>
 <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase-messaging.js"></script> -->
-    <script>
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('service-worker.js')
-        .then(function(reg) {  console.log('service worker installed');
-        navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
-            // Do we already have a push message subscription?
-            console.log(serviceWorkerRegistration);
-            // serviceWorkerRegistration.pushManager.subscribe()
-            // .then(function(subscription) {
-            //   console.log(subscription);
-            // });
-            
+<script>
+  var config = {
+    apiKey: "AIzaSyDs83fCGsYjdZULGj3N7mnXRlBSUIo7Rsw",
+    authDomain: "pwatest-89869.firebaseapp.com",
+    databaseURL: "https://pwatest-89869.firebaseio.com",
+    projectId: "pwatest-89869",
+    storageBucket: "pwatest-89869.appspot.com",
+    messagingSenderId: "1043250904569"
+  };
+  firebase.initializeApp(config);
+  var messaging = firebase.messaging();
+   messaging
+     .requestPermission()
+     .then(function () {
+       // MsgElem.innerHTML = "Notification permission granted."
+       console.log("Notification permission granted.");
+       // get the token in the form of promise
+       console.log(messaging.getToken());
+       return messaging.getToken()
+     })
+     .then(function(token) {
+       // print the token on the HTML page
+       // TokenElem.innerHTML = "token is : " + token;
+       console.log("Token is "+token);
+     })
+     .catch(function (err) {
+     // ErrElem.innerHTML = ErrElem.innerHTML + "; " + err
+     console.log("Unable to get permission to notify.", err);
+   });
+   messaging.onMessage(function(payload){
+     console.log(payload);
+   });
+  //  messaging.setBackgroundMessageHandler(function (payload) {
+  //   console.log('Handling background message ', payload);
+  //
+  //   return self.registration.showNotification(payload.data.title, {
+  //     body: payload.data.body,
+  //     icon: payload.data.icon,
+  //     tag: payload.data.tag,
+  //     data: payload.data.link
+  //   });
+  // });
 
-          });
-        })
-          .catch(err => console.log('Error', err));
-      }
-    </script>
-    <script>
-    // Initialize Firebase
-      var config = {
-        apiKey: "AIzaSyAyfIiK9js3fmRnQRhs0-8F4BQudJw3MGs",
-        authDomain: "ionic-button.firebaseapp.com",
-        databaseURL: "https://ionic-button.firebaseio.com",
-        projectId: "ionic-button",
-        storageBucket: "ionic-button.appspot.com",
-        messagingSenderId: "489099019976"
-      };
-      firebase.initializeApp(config);
-        var messaging = firebase.messaging();
-        messaging
-   .requestPermission()
-   .then(function () {
-     // MsgElem.innerHTML = "Notification permission granted."
-     console.log("Notification permission granted.");
+    // }
 
-     // get the token in the form of promise
-     console.log(messaging.getToken());
-     return messaging.getToken()
-   })
-   .then(function(token) {
-     // print the token on the HTML page
-     // TokenElem.innerHTML = "token is : " + token;
-     console.log("Token is "+token);
-   })
-   .catch(function (err) {
-   // ErrElem.innerHTML = ErrElem.innerHTML + "; " + err
-   console.log("Unable to get permission to notify.", err);
- });
- messaging.onMessage(function(payload) {
-            console.log("Message received. ", payload);
-            // NotisElem.innerHTML = NotisElem.innerHTML + JSON.stringify(payload)
-        });
 </script>
+
   </head>
   <body ng-app="starter" animation="slide-left-right-ios7">
     <!--
